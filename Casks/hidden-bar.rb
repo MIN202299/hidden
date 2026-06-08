@@ -1,6 +1,6 @@
 cask "hidden-bar" do
   version "1.9.1"
-  sha256 "PLACEHOLDER"
+  sha256 "fbe5e1754e20b593a973f831c453a52dd7fd3455012dbdc7b1ffaab976dc0148"
 
   url "https://github.com/MIN202299/hidden/releases/download/v#{version}/HiddenBar.zip"
   name "Hidden Bar"
