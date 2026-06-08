@@ -58,7 +58,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout develop
+          git fetch origin develop
+          git checkout -b develop origin/develop
           git add Casks/hidden-bar.rb
           git commit -m "chore: update cask sha256 for ${GITHUB_REF#refs/tags/}" || true
           git push origin develop || true
