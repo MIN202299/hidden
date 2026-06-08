@@ -24,24 +24,17 @@ jobs:
           xcodebuild -project "Hidden Bar.xcodeproj" \
             -scheme "Hidden Bar" \
             -configuration Release \
-            -archivePath build/HiddenBar.xcarchive \
-            archive
-
-      - name: Export app
-        run: |
-          xcodebuild -exportArchive \
-            -archivePath build/HiddenBar.xcarchive \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath build/export
+            -derivedDataPath build/DerivedData \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            MACOSX_DEPLOYMENT_TARGET=10.13 \
+            build
 
       - name: Create zip
         run: |
-          cd build/export
-          zip -r ../../HiddenBar.zip "Hidden Bar.app"
-
-      - name: Get version
-        id: version
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          cd "build/DerivedData/Build/Products/Release"
+          zip -r "$GITHUB_WORKSPACE/HiddenBar.zip" "Hidden Bar.app"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -51,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update Cask
+      - name: Update Cask SHA256
         run: |
           SHA256=$(shasum -a 256 HiddenBar.zip | awk '{print $1}')
           VERSION=${GITHUB_REF#refs/tags/v}
@@ -62,6 +55,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout develop
           git add Casks/hidden-bar.rb
-          git commit -m "Update cask to ${GITHUB_REF#refs/tags/}" || true
-          git push origin HEAD:develop || true
+          git commit -m "chore: update cask sha256 for ${GITHUB_REF#refs/tags/}" || true
+          git push origin develop || true
