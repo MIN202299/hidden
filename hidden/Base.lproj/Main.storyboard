@@ -657,6 +657,16 @@ between sections to configure Hidden Bar.</string>
                                                     <action selector="useFullStatusBarOnExpandChanged:" target="XfG-lQ-9wD" id="kh2-cl-DOH"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hVs-Xk-9Qp">
+                                                <rect key="frame" x="-2" y="49" width="254" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Hide visible icons when collapsed" bezelStyle="regularSquare" imagePosition="left" inset="2" id="pLm-Wz-4Kc">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="hideVisibleSectionChanged:" target="XfG-lQ-9wD" id="qRt-Nv-8Yx"/>
+                                                </connections>
+                                            </button>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nE7-aX-FH9">
                                                 <rect key="frame" x="0.0" y="35" width="230" height="20"/>
                                                 <subviews>
@@ -864,6 +874,7 @@ between sections to configure Hidden Bar.</string>
                         <outlet property="checkBoxLogin" destination="cbR-Jv-adm" id="DFO-De-0KU"/>
                         <outlet property="checkBoxShowAlwaysHiddenSection" destination="yaS-iD-h7g" id="T5N-bN-yl2"/>
                         <outlet property="checkBoxShowPreferences" destination="gWT-L1-Xdf" id="sC8-cw-Fmh"/>
+                        <outlet property="checkBoxHideVisibleSection" destination="hVs-Xk-9Qp" id="mTg-Rw-5Jn"/>
                         <outlet property="checkBoxUseFullStatusbar" destination="EQP-7r-FSu" id="Vll-3t-F9V"/>
                         <outlet property="lblAlwayHidden" destination="eBG-Wk-IXv" id="JaJ-0i-o6U"/>
                         <outlet property="statusBarStackView" destination="pJz-eb-ydI" id="huU-as-oWi"/>

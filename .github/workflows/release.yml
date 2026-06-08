@@ -1,0 +1,67 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Resolve SPM dependencies
+        run: xcodebuild -resolvePackageDependencies -project "Hidden Bar.xcodeproj" -scheme "Hidden Bar"
+
+      - name: Build
+        run: |
+          xcodebuild -project "Hidden Bar.xcodeproj" \
+            -scheme "Hidden Bar" \
+            -configuration Release \
+            -archivePath build/HiddenBar.xcarchive \
+            archive
+
+      - name: Export app
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/HiddenBar.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/export
+
+      - name: Create zip
+        run: |
+          cd build/export
+          zip -r ../../HiddenBar.zip "Hidden Bar.app"
+
+      - name: Get version
+        id: version
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: HiddenBar.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Cask
+        run: |
+          SHA256=$(shasum -a 256 HiddenBar.zip | awk '{print $1}')
+          VERSION=${GITHUB_REF#refs/tags/v}
+          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" Casks/hidden-bar.rb
+          sed -i '' "s/sha256 \".*\"/sha256 \"${SHA256}\"/" Casks/hidden-bar.rb
+
+      - name: Commit Cask update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/hidden-bar.rb
+          git commit -m "Update cask to ${GITHUB_REF#refs/tags/}" || true
+          git push origin HEAD:develop || true

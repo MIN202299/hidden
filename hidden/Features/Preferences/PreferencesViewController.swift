@@ -32,6 +32,7 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var checkBoxShowAlwaysHiddenSection: NSButton!
     
     @IBOutlet weak var checkBoxUseFullStatusbar: NSButton!
+    @IBOutlet weak var checkBoxHideVisibleSection: NSButton!
     @IBOutlet weak var timePopup: NSPopUpButton!
     
     @IBOutlet weak var btnClear: NSButton!
@@ -81,6 +82,10 @@ class PreferencesViewController: NSViewController {
     }
     @IBAction func useFullStatusBarOnExpandChanged(_ sender: NSButton) {
         Preferences.useFullStatusBarOnExpandEnabled = sender.state == .on
+    }
+
+    @IBAction func hideVisibleSectionChanged(_ sender: NSButton) {
+        Preferences.hideVisibleSectionOnCollapseEnabled = sender.state == .on
     }
     
     
@@ -156,6 +161,7 @@ class PreferencesViewController: NSViewController {
         checkBoxAutoHide.state = Preferences.isAutoHide ? .on : .off
         checkBoxShowPreferences.state = Preferences.isShowPreference ? .on : .off
         checkBoxShowAlwaysHiddenSection.state = Preferences.alwaysHiddenSectionEnabled ? .on : .off
+        checkBoxHideVisibleSection.state = Preferences.hideVisibleSectionOnCollapseEnabled ? .on : .off
         timePopup.selectItem(at: SelectedSecond.secondToPossition(seconds: Preferences.numberOfSecondForAutoHide))
     }
     

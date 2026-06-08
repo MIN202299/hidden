@@ -18,6 +18,7 @@ class StatusBarController {
     private let btnExpandCollapse = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let btnSeparate = NSStatusBar.system.statusItem(withLength: 1)
     private var btnAlwaysHidden:NSStatusItem? = nil
+    private var btnHideVisible: NSStatusItem? = nil
     
     private var btnHiddenLength: CGFloat = 20
     private var btnHiddenCollapseLength: CGFloat = 2000
@@ -66,11 +67,12 @@ class StatusBarController {
         updateCollapsedLengths()
         setupUI()
         setupAlwayHideStatusBar()
+        setupHideVisibleSection()
         NotificationCenter.default.addObserver(self, selector: #selector(handleScreenParametersChanged), name: NSApplication.didChangeScreenParametersNotification, object: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.collapseMenuBar()
         })
-        
+
         if Preferences.areSeparatorsHidden {hideSeparators()}
         autoCollapseIfNeeded()
     }
@@ -167,8 +169,11 @@ class StatusBarController {
             autoCollapseIfNeeded()
             return
         }
-        
+
         btnSeparate.length = self.btnHiddenCollapseLength
+        if Preferences.hideVisibleSectionOnCollapseEnabled {
+            btnHideVisible?.length = self.btnHiddenCollapseLength
+        }
         if let button = btnExpandCollapse.button {
             button.image = Assets.expandImage
         }
@@ -180,15 +185,15 @@ class StatusBarController {
     private func expandMenubar() {
         guard self.isCollapsed else {return}
         btnSeparate.length = btnHiddenLength
+        btnHideVisible?.length = 0
         if let button = btnExpandCollapse.button {
             button.image = Assets.collapseImage
         }
         autoCollapseIfNeeded()
-        
+
         if Preferences.useFullStatusBarOnExpandEnabled {
             NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
-            
         }
     }
     
@@ -277,6 +282,28 @@ extension StatusBarController {
                 NSStatusBar.system.removeStatusItem(existing)
             }
             self.btnAlwaysHidden = nil
+        }
+    }
+}
+
+//MARK: - Hide visible section feature
+extension StatusBarController {
+    private func setupHideVisibleSection() {
+        NotificationCenter.default.addObserver(self, selector: #selector(toggleHideVisibleIfNeeded), name: .hideVisibleToggle, object: nil)
+        toggleHideVisibleIfNeeded()
+    }
+
+    @objc private func toggleHideVisibleIfNeeded() {
+        if Preferences.hideVisibleSectionOnCollapseEnabled {
+            if self.btnHideVisible == nil {
+                self.btnHideVisible = NSStatusBar.system.statusItem(withLength: 0)
+                self.btnHideVisible?.autosaveName = "hiddenbar_hidevisible"
+            }
+        } else {
+            if let existing = self.btnHideVisible {
+                NSStatusBar.system.removeStatusItem(existing)
+            }
+            self.btnHideVisible = nil
         }
     }
 }

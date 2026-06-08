@@ -99,11 +99,22 @@ enum Preferences {
         get {
             UserDefaults.standard.bool(forKey: UserDefaults.Key.useFullStatusBarOnExpandEnabled)
         }
-        
+
         set {
             UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.useFullStatusBarOnExpandEnabled)
         }
     }
-    
-    
+
+    static var hideVisibleSectionOnCollapseEnabled: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: UserDefaults.Key.hideVisibleSectionOnCollapseEnabled)
+        }
+
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.hideVisibleSectionOnCollapseEnabled)
+            NotificationCenter.default.post(Notification(name: .hideVisibleToggle))
+        }
+    }
+
+
 }

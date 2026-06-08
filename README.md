@@ -2,10 +2,7 @@
 	<img width="200" height="200" margin-right="100%" src="https://github.com/dwarvesf/hidden/blob/develop/img/icon_512%402x.png?raw=true">
 </p>
 <p align="center">
-	<a href="https://webuild.community">
-		<img src="https://raw.githubusercontent.com/webuild-community/badge/master/svg/love.svg" />
-	</a>
-	<a href="https://github.com/dwarvesf/hidden/releases/latest">
+	<a href="https://github.com/MIN202299/hidden/releases/latest">
  		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
 	</a>
 	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
@@ -16,8 +13,11 @@
 	</a>
 </p>
 
-## Hidden Bar
+## Hidden Bar (Enhanced Fork)
+
 Hidden Bar lets you hide menu bar items to give your Mac a cleaner look.
+
+This fork adds the **"Hide visible icons when collapsed"** feature — when enabled, collapsing the menu bar hides ALL icons (not just the hidden section), leaving only the expand arrow visible. This can be toggled in Preferences.
 
 <p align="center">
 	<img width="400" src="img/screen1.png">
@@ -26,23 +26,29 @@ Hidden Bar lets you hide menu bar items to give your Mac a cleaner look.
 
 ## 🚀 Install
 
-###  App Store
+### Using Homebrew (Recommended)
 
-[![AppStore](img/appstore.svg)](https://itunes.apple.com/app/hidden-bar/id1452453066)
-
-### Others
-
-The Hidden Bar is notarized before distributed out side App Store. It's safe to use 👍
-
-#### Using Homebrew
-
-```
-brew install --cask hiddenbar
+```bash
+brew tap MIN202299/hidden https://github.com/MIN202299/hidden.git
+brew install --cask hidden-bar
 ```
 
-#### Manual download
+To upgrade:
 
-- [Download latest version](https://github.com/dwarvesf/hidden/releases/latest)
+```bash
+brew upgrade --cask hidden-bar
+```
+
+To uninstall:
+
+```bash
+brew uninstall --cask hidden-bar
+brew untap MIN202299/hidden
+```
+
+### Manual download
+
+- [Download latest version](https://github.com/MIN202299/hidden/releases/latest)
 - Open and drag the app to the Applications folder.
 - Launch Hidden and drag the icon in your menu bar (hold CMD) to the right so it is between some other icons.
 
@@ -50,26 +56,24 @@ brew install --cask hiddenbar
 
 * `⌘` + drag to move the Hidden icons around in the menu bar.
 * Click the Arrow icon to hide menu bar items.
+* Open Preferences to enable "Hide visible icons when collapsed" for a minimal menu bar.
 
 <p align="center">
 	<img src="img/tutorial.gif">
 </p>
 
-## ✨<a href="https://github.com/dwarvesf/hidden/graphs/contributors">Contributors</a>
+## ✨ New Features in This Fork
 
-This project exists thanks to all the people who contribute. Thank you guys so much 👏
-
-[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/0)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/0)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/1)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/1)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/2)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/2)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/3)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/3)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/4)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/4)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/5)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/5)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/6)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/6)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/7)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/7)
-
-Please read [this](CONTRIBUTING.md) before you make a contribution.
+- **Hide visible icons when collapsed**: When enabled, collapsing hides both the hidden section AND the visible section icons, leaving only the arrow button in the menu bar. Toggle this in Preferences.
 
 ## Requirements
+
 macOS version >= 10.13
 
-## You may also like
-- [Blurred](https://github.com/dwarvesf/Blurred) - A macOS utility that helps reduce distraction by dimming your inactive noise
-- [Micro Sniff](https://github.com/dwarvesf/micro-sniff) - An ultra-light macOS utility that notify whenever your micro-device is being used
-- [VimMotion](https://github.com/dwarvesf/VimMotionPublic) Vim style shortcut for MacOS
+## Credits
+
+Based on [Hidden Bar](https://github.com/dwarvesf/hidden) by [Dwarves Foundation](https://github.com/dwarvesf).
+
 ## License
 
 MIT &copy; [Dwarves Foundation](https://github.com/dwarvesf)
